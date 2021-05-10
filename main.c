@@ -101,10 +101,12 @@ int main(int argv, char* argc[]) {
             fprintf(fw, "%c", c);
             if (c == '}') {
                 fprintf(fw, "\n");
+
                 for (int i = 0; i < level; i++) {
                     prevC = ' ';
                     fprintf(fw, "    ");
                 }
+                prevC = '\n';
             }
         }
         if (c == ' ' && (prevC != ' ' && prevC != 10 && prevC != '#')) {
@@ -138,8 +140,6 @@ int main(int argv, char* argc[]) {
     char buf[length] = {0};
     int cycle = 0;
     int maxCycle = -1;
-    int bracket = 0;
-    int check = 0;
     while (!feof(fw)) {
         fscanf(fw, "%s", buf);
         if ((!(strcmp(buf, "for")) || !(strcmp(buf, "while")))) {
@@ -152,5 +152,7 @@ int main(int argv, char* argc[]) {
     }
     printf("%d", maxCycle);
     fclose(fw);
+
+    fw = fopen(outName, "rw");
     return 0;
 }
